@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>I&E Travel Concierge — премиальный тревел-консьерж</title>
+  <meta name="description" content="Маршруты под ключ, редкие брони и спокойное сопровождение без суеты. 24/7, ответ за 30 минут. Конфиденциально, персонально, международно.">
+  <meta property="og:title" content="I&E Travel Concierge — премиальный тревел-консьерж">
+  <meta property="og:description" content="Маршруты под ключ, редкие брони и сопровождение без суеты. Ответ за 30 минут — 24/7.">
+  <meta property="og:image" content="assets/images/hero-background.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <style>
+    :root{
+      --color-background:#fff;
+      --color-text:#111;
+      --color-accent:#c4a676;
+      --color-subtle:#888;
+      --font-main:'Inter',sans-serif;
+      --font-display:'Playfair Display',serif;
+      --container-width:1200px;
+      --gap:20px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{font-family:var(--font-main);color:var(--color-text);background:var(--color-background);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.2}
+    h1{font-size:3.5rem} h2{font-size:2.5rem} h3{font-size:1.5rem}
+    a{color:var(--color-accent);text-decoration:none;transition:opacity .2s ease}
+    a:hover{opacity:.8}
+    img{max-width:100%;height:auto;display:block}
+    .container{max-width:var(--container-width);margin:0 auto;padding:0 var(--gap)}
+    section{padding:80px 0}
+    .grid{display:grid;gap:var(--gap)}
+    :focus-visible{outline:2px solid var(--color-accent);outline-offset:4px;border-radius:4px}
+    .fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease-out,transform .6s ease-out}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+
+    /* Header */
+    .header{position:absolute;top:0;left:0;width:100%;padding:30px 0;z-index:10}
+    .header .container{display:flex;justify-content:space-between;align-items:center}
+    .logo{font-family:var(--font-display);font-size:1.5rem;color:#fff;text-decoration:none;font-weight:600}
+    .header__right{display:flex;align-items:center;gap:16px}
+    .lang-switcher button{background:none;border:none;color:#fff;font-size:1rem;cursor:pointer;opacity:.7;transition:opacity .2s}
+    .lang-switcher button.active{font-weight:600;opacity:1;text-decoration:underline}
+    .lang-switcher button:hover{opacity:1}
+    .header-phone{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:700;white-space:nowrap}
+    .header-phone:hover{opacity:.8}
+    .header-phone svg{display:block}
+
+    /* Hero */
+    .hero{position:relative;height:100svh;min-height:700px;color:#fff;display:flex;align-items:center;padding:0}
+    .hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:1}
+    .hero__background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;object-position:center 51%;}
+    .hero .container{position:relative;z-index:2}
+    .hero__content{max-width:800px}
+    .hero h1{font-size:3rem;margin-bottom:20px}
+    .hero p{font-size:1.25rem;opacity:.9;margin-bottom:40px}
+    .hero__buttons{display:flex;flex-wrap:wrap;gap:15px;margin-bottom:18px}
+    .btn{display:inline-block;padding:12px 24px;border-radius:4px;font-size:1rem;font-weight:500;text-align:center;cursor:pointer;transition:all .2s ease}
+    .btn--primary{background:var(--color-accent);color:#fff;border:2px solid var(--color-accent)}
+    .btn--primary:hover{background:transparent;color:var(--color-accent)}
+    .btn--secondary{border:2px solid var(--color-accent);color:var(--color-accent);background:transparent}
+    .btn--secondary:hover{background:var(--color-accent);color:#fff}
+    .hero__info{font-size:.95rem;opacity:.9}
+    .hero__info a{color:#fff}
+
+    /* Sections */
+    .section-header{text-align:center;margin-bottom:60px}
+    .section-header h2{margin-bottom:10px}
+    .section-header p{font-size:1.1rem;color:var(--color-subtle);max-width:700px;margin:0 auto}
+
+    #help .grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px}
+    .help-card{border:1px solid #eee;padding:30px;border-radius:8px}
+    .help-card h3{margin-bottom:15px;color:var(--color-accent)}
+
+    #process{background:#f9f9f9}
+    .process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:30px;text-align:center}
+    .step__icon{width:60px;height:60px;margin:0 auto 20px;background:#fff;border:1px solid #eee;border-radius:50%;display:flex;align-items:center;justify-content:center}
+    .step__icon svg{width:28px;height:28px;color:var(--color-accent)}
+    .step h3{font-size:1.2rem;margin-bottom:5px}
+    .step p{color:var(--color-subtle);font-size:.9rem}
+    @media (max-width:900px){.process-steps{grid-template-columns:1fr}}
+
+    #cases .grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
+    .case-card{background:#f9f9f9;padding:30px;border-radius:8px;display:flex;flex-direction:column}
+    .case-card__title{font-family:var(--font-display);font-size:1.5rem;margin-bottom:20px}
+    .case-card__item{margin-bottom:15px}
+    .case-card__item strong{color:var(--color-accent);display:block;margin-bottom:5px}
+    .case-card__result{margin-top:auto;padding-top:20px;border-top:1px solid #eee;font-style:italic;color:var(--color-subtle)}
+
+    #services,#why-us{background:#f9f9f9}
+    #why-us{background:#fff}
+    #services .grid,#why-us .grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px}
+    .feature-card{padding:20px}
+    .feature-card h3{margin-bottom:10px;font-size:1.3rem}
+    .feature-card p{color:var(--color-subtle)}
+
+    #contact-form{background:#111;color:#fff}
+    #contact-form .section-header h2{color:#fff}
+    #contact-form .section-header p{color:rgba(255,255,255,.7)}
+    .form{max-width:700px;margin:0 auto}
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;margin-bottom:8px;font-size:.9rem;opacity:.8}
+    .form-group input,.form-group textarea{width:100%;padding:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;color:#fff;font-size:1rem}
+    .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--color-accent)}
+    textarea{resize:vertical;min-height:120px}
+    .checkbox-group{display:flex;align-items:center;gap:10px}
+    .checkbox-group label{margin-bottom:0}
+    .form button{width:100%}
+    .form__footer-text{text-align:center;margin-top:20px;font-size:.9rem;opacity:.7}
+
+    .footer{padding:40px 0;background:#1a1a1a;color:rgba(255,255,255,.7);text-align:center}
+    .footer .container{display:flex;flex-direction:column;gap:20px}
+    .footer__links,.footer__contacts{display:flex;justify-content:center;flex-wrap:wrap;gap:20px}
+    .footer__links a,.footer__contacts a{color:rgba(255,255,255,.7)}
+    .footer__links a:hover,.footer__contacts a:hover{color:#fff}
+
+    /* Языковые блоки */
+    [data-lang-en]{display:none}
+    html[lang="en"] [data-lang-en]{display:revert !important}
+    html[lang="en"] [data-lang-ru]{display:none !important}
+
+    /* Responsive */
+    @media (max-width:768px){
+      h1{font-size:2.5rem}
+      h2{font-size:2rem}
+      section{padding:60px 0}
+      .hero{text-align:center}
+      .hero__content{margin:0 auto}
+      .hero__buttons{justify-content:center}
+      .header-phone{display:none} /* На мобильных — прячем телефон в шапке */
+    }
+
+    /* Фиксированная плашка «Позвонить» на мобильных */
+    .call-cta{display:none}
+    @media (max-width:768px){
+      .call-cta{
+        position:fixed;left:16px;right:16px;bottom:16px;z-index:100;
+        display:block;text-align:center;padding:14px 16px;border-radius:8px;
+        font-weight:700;background:var(--color-accent);color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.25);
+      }
+      .call-cta:active{transform:translateY(1px)}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="#" class="logo">I&E</a>
+
+      <div class="header__right">
+        <nav class="lang-switcher" aria-label="Language selector">
+          <button id="lang-ru" class="active" type="button">RU</button> /
+          <button id="lang-en" type="button">EN</button>
+        </nav>
+
+        <a href="tel:+79640394629" class="header-phone" onclick="trackEvent('click_phone')" aria-label="Позвонить I&E Travel Concierge">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.11.37 2.31.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C11.85 21 3 12.15 3 2a1 1 0 011-1h3.5a1 1 0 011 1c0 1.27.2 2.47.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/>
+          </svg>
+          <span>+7 964 039-46-29</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Мобильная плашка «Позвонить» -->
+  <a class="call-cta" href="tel:+79640394629" onclick="trackEvent('click_phone')">
+    <span data-lang-ru>Позвонить</span>
+    <span data-lang-en>Call</span>
+  </a>
+
+  <main>
+    <section class="hero">
+      <img src="assets/images/hero-background.jpg" alt="Интерьер премиального лаунжа в отеле с тёплым светом" class="hero__background" loading="eager">
+      <div class="container">
+        <div class="hero__content">
+          <h1 class="fade-in">
+            <span data-lang-ru>I&E Travel Concierge — премиальный тревел-консьерж для сложных и красивых поездок</span>
+            <span data-lang-en>I&E Travel Concierge — premium travel concierge for complex, beautiful trips</span>
+          </h1>
+
+          <p class="fade-in" style="transition-delay:.1s">
+            <span data-lang-ru>Маршруты под ключ, редкие брони и полное сопровождение в одном контакте — discreet & personal.</span>
+            <span data-lang-en>End-to-end itineraries, rare reservations, and full guidance in one contact — discreet & personal.</span>
+          </p>
+
+          <div class="hero__buttons fade-in" style="transition-delay:.2s">
+            <a href="#contact-form" class="btn btn--primary">
+              <span data-lang-ru>Получить персональный маршрут</span>
+              <span data-lang-en>Get a personal itinerary</span>
+            </a>
+            <a href="https://wa.me/79640394629" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" onclick="trackEvent('click_whatsapp')">
+              <span data-lang-ru>Написать в WhatsApp</span>
+              <span data-lang-en>Message on WhatsApp</span>
+            </a>
+            <a href="https://t.me/irina_travel_concierge" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" onclick="trackEvent('click_telegram')">
+              <span data-lang-ru>Написать в Telegram</span>
+              <span data-lang-en>Message on Telegram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="help">
+      <div class="container">
+        <div class="grid">
+          <div class="help-card fade-in">
+            <h3><span data-lang-ru>Сложные маршруты</span><span data-lang-en>Complex Itineraries</span></h3>
+            <p><span data-lang-ru>Организуем безупречные стыковки и логистику для путешествий по нескольким странам без стресса и потерь времени.</span><span data-lang-en>We arrange seamless connections and logistics for multi-country trips without stress or wasted time.</span></p>
+          </div>
+          <div class="help-card fade-in" style="transition-delay:.1s">
+            <h3><span data-lang-ru>Виллы и отели</span><span data-lang-en>Villas & Hotels</span></h3>
+            <p><span data-lang-ru>Находим и бронируем жильё, которое идеально подходит именно вам, от бутик-отелей до закрытых частных резиденций.</span><span data-lang-en>We find and book accommodations that are a perfect fit for you, from boutique hotels to exclusive private residences.</span></p>
+          </div>
+          <div class="help-card fade-in" style="transition-delay:.2s">
+            <h3><span data-lang-ru>Редкие бронирования</span><span data-lang-en>Rare Reservations</span></h3>
+            <p><span data-lang-ru>Обеспечим столы в ресторанах с листом ожидания на месяцы вперёд и билеты на самые востребованные мероприятия.</span><span data-lang-en>We secure tables at restaurants with months-long waiting lists and tickets to the most sought-after events.</span></p>
+          </div>
+          <div class="help-card fade-in" style="transition-delay:.3s">
+            <h3><span data-lang-ru>Авиаперелёты</span><span data-lang-en>Air Travel</span></h3>
+            <p><span data-lang-ru>Подберём оптимальные рейсы бизнес-класса, организуем чартер или частный борт для максимального комфорта.</span><span data-lang-en>We select optimal business class flights and arrange charters or private jets for maximum comfort.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2><span data-lang-ru>Процесс работы</span><span data-lang-en>How It Works</span></h2>
+        </div>
+        <div class="process-steps">
+          <div class="step fade-in">
+            <div class="step__icon"></div>
+            <h3>1</h3>
+            <p><span data-lang-ru>Вы оставляете запрос с датами и пожеланиями</span><span data-lang-en>You send a request with your dates and preferences</span></p>
+          </div>
+          <div class="step fade-in" style="transition-delay:.1s">
+            <div class="step__icon"></div>
+            <h3>2</h3>
+            <p><span data-lang-ru>Уточняем детали для полного понимания задачи</span><span data-lang-en>We clarify the details to fully understand your vision</span></p>
+          </div>
+          <div class="step fade-in" style="transition-delay:.2s">
+            <div class="step__icon"></div>
+            <h3>3</h3>
+            <p><span data-lang-ru>Готовим 1–2 релевантных сценария маршрута</span><span data-lang-en>We prepare 1-2 relevant itinerary scenarios</span></p>
+          </div>
+          <div class="step fade-in" style="transition-delay:.3s">
+            <div class="step__icon"></div>
+            <h3>4</h3>
+            <p><span data-lang-ru>Согласовываем, вносим правки и бронируем</span><span data-lang-en>We align, make adjustments, and book everything</span></p>
+          </div>
+          <div class="step fade-in" style="transition-delay:.4s">
+            <div class="step__icon"></div>
+            <h3>5</h3>
+            <p><span data-lang-ru>Сопровождаем во время поездки и остаёмся на связи 24/7</span><span data-lang-en>We support you during the trip and stay in touch 24/7</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cases">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2><span data-lang-ru>Кейсы</span><span data-lang-en>Case Studies</span></h2>
+        </div>
+        <div class="grid">
+          <div class="case-card fade-in">
+            <h3 class="case-card__title"><span data-lang-ru>Семейная Италия в пик сезона</span><span data-lang-en>Family Trip to Italy in High Season</span></h3>
+            <div class="case-card__item">
+              <strong><span data-lang-ru>Задача:</span><span data-lang-en>Task:</span></strong>
+              <p><span data-lang-ru>Тихая вилла у моря, частные экскурсии без толп, интересные занятия для детей.</span><span data-lang-en>A quiet seaside villa, private tours avoiding crowds, and engaging activities for children.</span></p>
+            </div>
+            <div class="case-card__item">
+              <strong><span data-lang-ru>Решение:</span><span data-lang-en>Solution:</span></strong>
+              <p><span data-lang-ru>Нашли уединённую виллу в Лигурии, организовали день на яхте с посещением скрытых бухт и частные дегустации.</span><span data-lang-en>We found a secluded villa in Liguria, arranged a day on a yacht visiting hidden coves, and organized private tastings.</span></p>
+            </div>
+            <p class="case-card__result"><span data-lang-ru>Результат: «Без очередей, дети в восторге, лучший отпуск».</span><span data-lang-en>Result: "No queues, the kids were thrilled, our best vacation ever."</span></p>
+          </div>
+
+          <div class="case-card fade-in" style="transition-delay:.1s">
+            <h3 class="case-card__title"><span data-lang-ru>48 часов в Париже</span><span data-lang-en>48 Hours in Paris</span></h3>
+            <div class="case-card__item">
+              <strong><span data-lang-ru>Задача:</span><span data-lang-en>Task:</span></strong>
+              <p><span data-lang-ru>Совместить деловую встречу с романтическим ужином и культурной программой. Максимально эффективно.</span><span data-lang-en>Combine a business meeting with a romantic dinner and a cultural program. Maximum efficiency needed.</span></p>
+            </div>
+            <div class="case-card__item">
+              <strong><span data-lang-ru>Решение:</span><span data-lang-en>Solution:</span></strong>
+              <p><span data-lang-ru>Разработали компактный маршрут, забронировали столик в востребованном бистро и обеспечили все трансферы.</span><span data-lang-en>We designed a compact itinerary, booked a table at a sought-after bistro, and handled all transfers seamlessly.</span></p>
+            </div>
+            <p class="case-card__result"><span data-lang-ru>Результат: «Успели всё, что хотели, и даже больше, без единой заминки».</span><span data-lang-en>Result: "We managed to do everything we wanted and more, without a single hitch."</span></p>
+          </div>
+
+          <div class="case-card fade-in" style="transition-delay:.2s">
+            <h3 class="case-card__title"><span data-lang-ru>Срочный маршрут Сингапур—Бали</span><span data-lang-en>Urgent Singapore—Bali Itinerary</span></h3>
+            <div class="case-card__item">
+              <strong><span data-lang-ru>Задача:</span><span data-lang-en>Task:</span></strong>
+              <p><span data-lang-ru>Организовать перелёт и трансферы в течение нескольких часов с минимальным временем ожидания, включая fast-track.</span><span data-lang-en>Arrange a flight and transfers within hours with minimal waiting time, including airport fast-track service.</span></p>
+            </div>
+            <div class="case-card__item">
+              <strong><span data-lang-ру>Решение:</span><span data-lang-en>Solution:</span></strong>
+              <p><span data-lang-ru>Использовали проверенные стыковки, организовали встречу у трапа и полное сопровождение в аэропорту.</span><span data-lang-en>We utilized proven flight connections and arranged a meet-and-greet service at the aircraft for full airport assistance.</span></p>
+            </div>
+            <p class="case-card__result"><span data-lang-ru>Результат: «Стыковка прошла незаметно, всё было готово заранее».</span><span data-lang-en>Result: "The connection was seamless; everything was prepared in advance."</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2><span data-lang-ru>Услуги</span><span data-lang-en>Services</span></h2>
+        </div>
+        <div class="grid">
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Маршруты под ключ</span><span data-lang-en>End-to-End Itineraries</span></h3>
+            <p><span data-lang-ru>Полная организация путешествия от идеи до возвращения домой.</span><span data-lang-en>Complete trip planning from the initial idea to your return home.</span></p>
+          </div>
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Перелёты</span><span data-lang-en>Air Travel</span></h3>
+            <p><span data-lang-ru>Бизнес-класс, частные борты и оптимизация сложных перелётов.</span><span data-lang-en>Business class, private jets, and optimization of complex flights.</span></p>
+          </div>
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Отели и виллы</span><span data-lang-en>Hotels & Villas</span></h3>
+            <p><span data-lang-ru>Доступ к эксклюзивным объектам и специальным условиям.</span><span data-lang-en>Access to exclusive properties and special booking conditions.</span></p>
+          </div>
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Lifestyle-запросы</span><span data-lang-en>Lifestyle Requests</span></h3>
+            <p><span data-lang-ru>Рестораны, ивенты, гиды, яхты, трансферы и многое другое.</span><span data-lang-en>Restaurants, events, guides, yachts, transfers, and much more.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why-us">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2><span data-lang-ru>Почему мы</span><span data-lang-en>Why Us</span></h2>
+        </div>
+        <div class="grid">
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Персональное ведение 1:1</span><span data-lang-en>Personal 1:1 Service</span></h3>
+            <p><span data-lang-ru>Один контакт для решения всех вопросов. Мы глубоко вникаем в ваши предпочтения.</span><span data-lang-en>A single point of contact for all your needs. We delve deep into your preferences.</span></p>
+          </div>
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Конфиденциальность</span><span data-lang-en>Confidentiality</span></h3>
+            <p><span data-lang-ru>Полная приватность и аккуратность в работе с вашими данными и планами.</span><span data-lang-en>Complete privacy and discretion in handling your data and travel plans.</span></p>
+          </div>
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Доступ к редкому</span><span data-lang-en>Access to the Rare</span></h3>
+            <p><span data-lang-ru>Наши контакты и опыт открывают двери, которые закрыты для других.</span><span data-lang-en>Our network and experience open doors that are closed to others.</span></p>
+          </div>
+          <div class="feature-card fade-in">
+            <h3><span data-lang-ru>Поддержка в пути</span><span data-lang-en>On-Trip Support</span></h3>
+            <p><span data-lang-ru>Мы на связи 24/7, чтобы решать любые возникающие вопросы во время вашей поездки.</span><span data-lang-en>We are available 24/7 to resolve any issues that may arise during your trip.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact-form">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2><span data-lang-ru>Обсудим ваше путешествие?</span><span data-lang-en>Ready to Plan Your Trip?</span></h2>
+          <p><span data-lang-ru>Оставьте заявку, и мы свяжемся с вами для детального обсуждения.</span><span data-lang-en>Fill out the form, and we will contact you to discuss the details.</span></p>
+        </div>
+
+        <form class="form fade-in" action="thank-you_ru.html" method="GET" id="main-form">
+          <div class="form-group">
+            <label for="name"><span data-lang-ru>Имя</span><span data-lang-en>Name</span></label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="contact"><span data-lang-ru>Контакт (телефон/мессенджер)</span><span data-lang-en>Contact (Phone/Messenger)</span></label>
+            <input type="text" id="contact" name="contact" required>
+          </div>
+          <div class="form-group">
+            <label for="location"><span data-lang-ru>Город / Часовой пояс</span><span data-lang-en>City / Timezone</span></label>
+            <input type="text" id="location" name="location" required>
+          </div>
+          <div class="form-group">
+            <label for="dates"><span data-lang-ru>Даты поездки</span><span data-lang-en>Travel Dates</span></label>
+            <input type="text" id="dates" name="dates" required>
+          </div>
+          <div class="form-group">
+            <label for="guests"><span data-lang-ru>Количество гостей</span><span data-lang-en>Number of Guests</span></label>
+            <input type="number" id="guests" name="guests" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="wishes"><span data-lang-ru>Страны / Пожелания / Интересы</span><span data-lang-en>Countries / Wishes / Interests</span></label>
+            <textarea id="wishes" name="wishes" rows="4" required></textarea>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="privacy" name="privacy" required>
+            <label for="privacy">
+              <span data-lang-ru>Я согласен(а) с <a href="privacy_ru.html" target="_blank">политикой конфиденциальности</a></span>
+              <span data-lang-en>I agree to the <a href="privacy_en.html" target="_blank">Privacy Policy</a></span>
+            </label>
+          </div>
+          <br>
+          <button type="submit" class="btn btn--primary">
+            <span data-lang-ru>Получить персональный маршрут</span>
+            <span data-lang-en>Get a personal itinerary</span>
+          </button>
+          <p class="form__footer-text">
+            <span data-lang-ru>Отвечаем в течение 30 минут в любое время.</span>
+            <span data-lang-en>We reply within 30 minutes, anytime.</span>
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>
+        <span data-lang-ru>I&E Travel Concierge. Конфиденциальное сопровождение путешествий.</span>
+        <span data-lang-en>I&E Travel Concierge. Discreet travel support.</span>
+      </p>
+      <div class="footer__contacts">
+        <a href="tel:+79640394629" onclick="trackEvent('click_phone')">+7 964 039-46-29</a>
+        <a href="https://wa.me/79640394629" target="_blank" rel="noopener noreferrer" onclick="trackEvent('click_whatsapp')">WhatsApp</a>
+        <a href="https://t.me/irina_travel_concierge" target="_blank" rel="noopener noreferrer" onclick="trackEvent('click_telegram')">Telegram</a>
+      </div>
+      <div class="footer__links">
+        <a href="privacy_ru.html" target="_blank" data-lang-ru>Политика конфиденциальности</a>
+        <a href="privacy_en.html" target="_blank" data-lang-en>Privacy Policy</a>
+        <a href="terms_ru.html" target="_blank" data-lang-ru>Условия оказания услуг</a>
+        <a href="terms_en.html" target="_blank" data-lang-en>Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Простейшие хуки аналитики
+    window.trackEvent = window.trackEvent || function(name, params){ try{ console.log('Analytics Event:', name, params||{}); }catch(e){} };
+
+    (function(){
+      const form = document.getElementById('main-form');
+      const langRuBtn = document.getElementById('lang-ru');
+      const langEnBtn = document.getElementById('lang-en');
+
+      function setMeta(name, content){
+        let el = document.querySelector('meta[name="'+name+'"]');
+        if(!el){ el = document.createElement('meta'); el.setAttribute('name', name); document.head.appendChild(el); }
+        el.setAttribute('content', content);
+      }
+      function setMetaProp(prop, content){
+        let el = document.querySelector('meta[property="'+prop+'"]');
+        if(!el){ el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
+        el.setAttribute('content', content);
+      }
+
+      function setLanguage(lang){
+        const isEn = (lang === 'en');
+        document.documentElement.setAttribute('lang', isEn ? 'en' : 'ru');
+        // Кнопки активного языка
+        langRuBtn.classList.toggle('active', !isEn);
+        langEnBtn.classList.toggle('active', isEn);
+        // Action формы
+        if(form){ form.action = 'thank-you_' + (isEn ? 'en' : 'ru') + '.html'; }
+        // Мета и title
+        if(isEn){
+          document.title = 'I&E Travel Concierge — premium travel concierge';
+          setMeta('description','Tailor-made routes, rare bookings and calm, discreet support. 24/7, reply within 30 minutes. Confidential, personal, international.');
+          setMetaProp('og:title','I&E Travel Concierge — premium travel concierge');
+          setMetaProp('og:description','Tailor-made routes, rare bookings and calm, discreet support. 24/7, reply within 30 minutes.');
+          setMetaProp('og:locale','en_US');
+        }else{
+          document.title = 'I&E Travel Concierge — премиальный тревел-консьерж';
+          setMeta('description','Маршруты под ключ, редкие брони и спокойное сопровождение без суеты. 24/7, ответ за 30 минут. Конфиденциально, персонально, международно.');
+          setMetaProp('og:title','I&E Travel Concierge — премиальный тревел-консьерж');
+          setMetaProp('og:description','Маршруты под ключ, редкие брони и сопровождение без суеты. Ответ за 30 минут — 24/7.');
+          setMetaProp('og:locale','ru_RU');
+        }
+        try{ localStorage.setItem('lang', isEn?'en':'ru'); }catch(e){}
+      }
+
+      // Инициализация языка из URL/хранилища
+      const params = new URLSearchParams(location.search);
+      const hash = (location.hash||'').replace('#','');
+      let init = (params.get('lang') || hash || (function(){ try{return localStorage.getItem('lang')}catch(e){return null} })() || 'ru').toLowerCase();
+      init = init.startsWith('en') ? 'en' : 'ru';
+      setLanguage(init);
+
+      // Клики по переключателям
+      langRuBtn.addEventListener('click', function(){ setLanguage('ru'); });
+      langEnBtn.addEventListener('click', function(){ setLanguage('en'); });
+
+      // Анимация появления
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },{threshold:.1});
+      document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+      // Иконки шагов
+      const icons = [
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>',
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c.966 0 1.899.184 2.75.526M10.25 10.25c-3.183 0-5.75 2.567-5.75 5.75s2.567 5.75 5.75 5.75c2.816 0 5.16-2.009 5.646-4.666M12 20.25a8.25 8.25 0 100-16.5 8.25 8.25 0 000 16.5zM17.625 7.625a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" /></svg>',
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.5-12.75a.75.75 0 00-1.5 0v12.75a.75.75 0 001.5 0V4.5zM3.75 12a.75.75 0 01.75-.75h15a.75.75 0 010 1.5h-15a.75.75 0 01-.75-.75z" /></svg>',
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>'
+      ];
+      document.querySelectorAll('.step__icon').forEach((el,i)=>{ el.innerHTML = icons[i] || icons[0]; });
+
+      // Аналитика отправки формы
+      if(form){
+        form.addEventListener('submit', function(){
+          const data = Object.fromEntries(new FormData(form).entries());
+          trackEvent('form_submit', { form_name:'main_contact_form', form_data:data });
+        });
+      }
+    })();
+  </script>
+  <script>
+  (function () {
+    // ВСТАВЬ СЮДА СВОЙ URL веб-приложения (полученный на шаге 3.5), строкой целиком:
+    const TG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyI0dxGFxRZDonoOBPGmIqBzJE8qUdL_k0lVMC3jS-zbRDAdEl1OkYH9nN9pHRFwRcG/exec';
+  
+    const form = document.getElementById('main-form');
+    if (!form) return;
+  
+    form.addEventListener('submit', function () {
+      try {
+        const fd = new FormData(form);
+        if (!fd.has('privacy')) fd.append('privacy', '');
+  
+        // Отправляем максимально совместимо: сначала sendBeacon, иначе fetch
+        const usp = new URLSearchParams();
+        for (const [k, v] of fd.entries()) usp.append(k, v);
+  
+        if (navigator.sendBeacon) {
+          const blob = new Blob([usp.toString()], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+          navigator.sendBeacon(TG_ENDPOINT, blob);
+        } else {
+          fetch(TG_ENDPOINT, { method: 'POST', body: usp });
+        }
+      } catch (e) {
+        console.error('Telegram submit error:', e);
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
+
