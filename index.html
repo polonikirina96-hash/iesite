@@ -570,6 +570,45 @@
     });
   })();
   </script>
+<script>
+// Универсальная отправка события в GA4
+function sendGA(name, params){ try{ gtag('event', name, Object.assign({debug_mode:true}, params||{})); }catch(e){} }
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  // Клик по телефону
+  document.querySelectorAll('a[href^="tel:"]').forEach(a=>{
+    a.addEventListener('click', function(){
+      sendGA('click_call', {
+        phone: (this.getAttribute('href')||'').replace('tel:',''),
+        link_text: (this.textContent||'').trim()
+      });
+    });
+  });
+
+  // Клик по WhatsApp (wa.me/79640394629)
+  document.querySelectorAll('a[href^="https://wa.me"]').forEach(a=>{
+    a.addEventListener('click', function(){
+      sendGA('click_whatsapp', { link_url: this.href });
+    });
+  });
+
+  // Клик по Telegram (t.me/irina_travel_concierge)
+  document.querySelectorAll('a[href*="t.me"]').forEach(a=>{
+    a.addEventListener('click', function(){
+      sendGA('click_telegram', { link_url: this.href });
+    });
+  });
+
+  // Отправка любой формы
+  document.querySelectorAll('form').forEach(form=>{
+    form.addEventListener('submit', function(){
+      sendGA('lead_form_submit', { form_id: form.id || '(no-id)' });
+    }, {capture:true});
+  });
+
+});
+</script>
 </body>
 </html>
 
